@@ -3,21 +3,25 @@ package BO;
 import Database.DatabaseConnection;
 import Datos.ReservaD;
 import Entity.Reserva;
-import java.sql.Connection;
+import java.beans.Statement;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author gdars
  */
 public class ReservaBO {
-    
+
     private String mensaje = "";
-    private ReservaD rbo = new ReservaD();
+    private ReservaD rd = new ReservaD();
 
     public String agregarReserva(Reserva res) {
         Connection conn = DatabaseConnection.getConnection();
         try {
-            mensaje = rbo.agregarReserva(conn, res);
+            mensaje = rd.agregarReserva(conn, res);
         } catch (Exception e) {
             mensaje = mensaje + " " + e.getMessage();
         } finally {
@@ -31,11 +35,11 @@ public class ReservaBO {
         }
         return mensaje;
     }
-    
+
     public String modificarReserva(Reserva res) {
         Connection conn = DatabaseConnection.getConnection();
         try {
-            mensaje = rbo.modificarReserva(conn, res);
+            mensaje = rd.modificarReserva(conn, res);
         } catch (Exception e) {
             mensaje = mensaje + " " + e.getMessage();
         } finally {
@@ -49,11 +53,11 @@ public class ReservaBO {
         }
         return mensaje;
     }
-    
+
     public String eliminarReserva(int id_Reserva) {
         Connection conn = DatabaseConnection.getConnection();
         try {
-            mensaje = rbo.eliminarReserva(conn, id_Reserva);
+            mensaje = rd.eliminarReserva(conn, id_Reserva);
         } catch (Exception e) {
             mensaje = mensaje + " " + e.getMessage();
         } finally {
@@ -67,8 +71,14 @@ public class ReservaBO {
         }
         return mensaje;
     }
-    
-    public void listarPersona() {
 
+    public void listarReserva(JTable tabla) {
+        Connection conn = DatabaseConnection.getConnection();
+        rd.listarReserva(conn, tabla);
+        try{
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

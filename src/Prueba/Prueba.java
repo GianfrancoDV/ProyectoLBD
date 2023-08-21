@@ -76,21 +76,21 @@ public class Prueba {
 
         SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
 
-        res.setId_Habitacion(1);
-        res.setDias_estadia(5);
+        res.setId_Habitacion(4);
+        res.setDias_estadia(3);
         try {
-            java.util.Date javaIngreso = date.parse("20-02-2023");
+            java.util.Date javaIngreso = date.parse("22-10-2023");
             java.sql.Date sqlIngreso = new java.sql.Date(javaIngreso.getTime());
             res.setIngreso(sqlIngreso);
         } catch (Exception e) {
         }
         try {
-            java.util.Date javaSalida = date.parse("25-02-2023");
+            java.util.Date javaSalida = date.parse("25-10-2023");
             java.sql.Date sqlSalida = new java.sql.Date(javaSalida.getTime());
             res.setSalida(sqlSalida);
         } catch (Exception e) {
         }
-        res.setCedula(1234);
+        res.setCedula(4321);
         mensaje = rbo.agregarReserva(res);
         System.out.println(mensaje);
     }
@@ -128,6 +128,7 @@ public class Prueba {
     //General
     public static void main(String[] args) {
         Prueba prb = new Prueba();
-        prb.modificarR();
+        //prb.modificarR();
+        prb.insertarR();
     }
 }

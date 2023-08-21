@@ -3,7 +3,9 @@ package Datos;
 
 import Entity.Persona;
 import java.sql.*;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -66,7 +68,27 @@ public class PersonaD {
         return mensaje;
     }
 
-    public void listarPersona(Connection con, JTable tabla) {
+    public void listarPersona(Connection conn, JTable tabla) {
+        DefaultTableModel model;
+        String[] columnas = {"CEDULA", "NOMBRE", "DIRECCION"};
+        model = new DefaultTableModel(null, columnas);
 
+        String sql = "SELECT * FROM PERSONA ORDER BY cedula";
+        String[] filas = new String[3];
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()){
+                for (int i = 0; i < 3; i++){
+                    filas[i] = rs.getString(i+1);
+                }
+                model.addRow(filas);
+            }
+            tabla.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se puede listar la tabla");
+        }
     }
 }

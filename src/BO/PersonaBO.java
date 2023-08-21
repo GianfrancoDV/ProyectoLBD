@@ -4,7 +4,9 @@ package BO;
 import Database.DatabaseConnection;
 import Datos.PersonaD;
 import Entity.Persona;
-import java.sql.Connection;
+import java.sql.*;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -70,7 +72,13 @@ public class PersonaBO {
         return mensaje;
     }
 
-    public void listarPersona() {
-
+    public void listarPersona(JTable tabla) {
+        Connection conn = DatabaseConnection.getConnection();
+        pbo.listarPersona(conn, tabla);
+        try{
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
